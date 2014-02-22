@@ -3,19 +3,18 @@
 //  Objc-Stomp
 //
 //
-//  Implements the Stomp Protocol v1.0
-//  See: http://stomp.codehaus.org/Protocol
+//  Implements the Stomp Protocol v1.1
+//  See: http://stomp.github.io/stomp-specification-1.1.html
 // 
-//  Requires the AsyncSocket library
-//  See: http://code.google.com/p/cocoaasyncsocket/
+//  Requires the Socket Rocket library
+//  See: https://github.com/square/SocketRocket
 //  
 //  See: LICENSE
-//	Stefan Saasen <stefan@coravy.com>
 //  Based on StompService.{h,m} by Scott Raymond <sco@scottraymond.net>.
-
+//  Modified by Fabio Knoedt adapting the version above to work with RocketSocket framework and Stomp 1.2.
 
 #import <Foundation/Foundation.h>
-#import "AsyncSocket.h"
+#import "SRWebSocket.h"
 
 @class CRVStompClient;
 
@@ -33,12 +32,12 @@ typedef enum {
 - (void)stompClientDidConnect:(CRVStompClient *)stompService;
 - (void)serverDidSendReceipt:(CRVStompClient *)stompService withReceiptId:(NSString *)receiptId;
 - (void)serverDidSendError:(CRVStompClient *)stompService withErrorMessage:(NSString *)description detailedErrorMessage:(NSString *) theMessage;
+- (void)serverDidSendPing;
 @end
 
 @interface CRVStompClient : NSObject {
 	@private
-	id<CRVStompClientDelegate> delegate;
-	AsyncSocket *socket;
+	SRWebSocket *_webSocket;
 	NSString *host;
 	NSUInteger port;
 	NSString *login;
@@ -46,6 +45,7 @@ typedef enum {
 	NSString *sessionId;
 	BOOL doAutoconnect;
 	BOOL anonymous;
+    BOOL wss;
 }
 
 @property (nonatomic, assign) id<CRVStompClientDelegate> delegate;
@@ -61,7 +61,8 @@ typedef enum {
 			 login:(NSString *)theLogin
 		  passcode:(NSString *)thePasscode 
 		  delegate:(id<CRVStompClientDelegate>)theDelegate
-	   autoconnect:(BOOL) autoconnect;
+	   autoconnect:(BOOL) autoconnect
+               wss:(BOOL)wss;
 
 /**
  * Connects as an anonymous user. Suppresses "login" and "passcode" headers.
@@ -72,8 +73,11 @@ typedef enum {
 	   autoconnect:(BOOL) autoconnect;
 
 - (void)connect;
-- (void)sendMessage:(NSString *)theMessage toDestination:(NSString *)destination;
-- (void)sendMessage:(NSString *)theMessage toDestination:(NSString *)destination withHeaders:(NSDictionary*)headers;
+- (void)connect:(NSString *)newHost withPort:(long long int)newPort;
+- (void)sendMessage:(id)theMessage toDestination:(NSString *)destination;
+- (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withReceipt:(NSString *)receipt;
+- (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withHeaders:(NSDictionary*)headers;
+- (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withHeaders:(NSDictionary*)headers withReceipt:(NSString *)receipt;
 - (void)subscribeToDestination:(NSString *)destination;
 - (void)subscribeToDestination:(NSString *)destination withAck:(CRVStompAckMode) ackMode;
 - (void)subscribeToDestination:(NSString *)destination withHeader:(NSDictionary *) header;
@@ -82,6 +86,7 @@ typedef enum {
 - (void)commit:(NSString *)transactionId;
 - (void)abort:(NSString *)transactionId;
 - (void)ack:(NSString *)messageId;
+- (void)ack:(NSString *)messageId withSubscription:(NSString *)subscription;
 - (void)disconnect;
 
 @end

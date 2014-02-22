@@ -1,16 +1,16 @@
 STOMP client for Objective-C
 ============================
 
-This is a simple STOMP client based on
-
-* an initial implementation (StompService) from Scott Raymond <sco@scottraymond.net> (see [http://gist.github.com/72935](http://gist.github.com/72935))
-* and AsynSocket: [http://code.google.com/p/cocoaasyncsocket/](http://code.google.com/p/cocoaasyncsocket/)
-
+This is a simple STOMP client based on [https://github.com/juretta/objc-stomp]
+that supports Stomp v1.1 and v1.2. 
 
 Usage
------
+------------
 
-Add AsynSocket.{h,m} and CRVStompClient.{h,m} to your project.
+This library was created to work with SocketRocket [https://github.com/square/SocketRocket].
+But shoud work with others WebSocket Libraries.
+
+CRVStompClient.{h,m} to your project.
 
 MyExample.h
 
@@ -75,10 +75,20 @@ In MyExample.m
 		[super dealloc];
 	}
 	
+
+Support
+------------	
+	
+Runs fine in iOS5+ and supports ARC.
+	
 Contributors
 ------------
 
+Original code:
 * Scott Raymond
 * Stefan Saasen
 * Graham Haworth
 * jbg
+
+This version:
+* Fabio Knoedt
