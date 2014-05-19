@@ -153,7 +153,7 @@
 }
 
 
-- (void)connect:(NSString *)newHost withPort:(long long int)newPort { 
+- (void)connect:(NSString *)newHost withPort:(NSUInteger)newPort {
     
     self.host = newHost;
     self.port = newPort;

@@ -61,7 +61,7 @@ typedef enum {
 			 login:(NSString *)theLogin
 		  passcode:(NSString *)thePasscode 
 		  delegate:(id<CRVStompClientDelegate>)theDelegate
-	   autoconnect:(BOOL) autoconnect
+	   autoconnect:(BOOL)autoconnect
                wss:(BOOL)wss;
 
 /**
@@ -73,7 +73,7 @@ typedef enum {
 	   autoconnect:(BOOL) autoconnect;
 
 - (void)connect;
-- (void)connect:(NSString *)newHost withPort:(long long int)newPort;
+- (void)connect:(NSString *)newHost withPort:(NSUInteger)newPort;
 - (void)sendMessage:(id)theMessage toDestination:(NSString *)destination;
 - (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withReceipt:(NSString *)receipt;
 - (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withHeaders:(NSDictionary*)headers;
