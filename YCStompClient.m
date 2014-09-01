@@ -1,5 +1,5 @@
 //
-//  CRVStompClient.h
+//  YCStompClient.h
 //  Objc-Stomp
 //
 //
@@ -13,7 +13,7 @@
 //  Based on StompService.{h,m} by Scott Raymond <sco@scottraymond.net>.
 //  Modified by Fabio Knoedt adapting the version above to work with RocketSocket framework and Stomp 1.2.
 
-#import "CRVStompClient.h"
+#import "YCStompClient.h"
 
 #define kStompDefaultPort			61613
 #define kDefaultTimeout				5	//
@@ -60,9 +60,9 @@
 
 #define kNoSocketConnection         @"There is no websocket connection. Impossible to communicate with Stomp."
 
-#define CRV_RELEASE_SAFELY(__POINTER) { [__POINTER release]; __POINTER = nil; }
+#define YC_RELEASE_SAFELY(__POINTER) { [__POINTER release]; __POINTER = nil; }
 
-@interface CRVStompClient() <SRWebSocketDelegate> 
+@interface YCStompClient() <SRWebSocketDelegate> 
 
 @property (nonatomic, assign) NSUInteger port;
 @property (nonatomic, retain) SRWebSocket *_webSocket;
@@ -73,12 +73,12 @@
 
 @end
 
-@interface CRVStompClient(PrivateMethods)
+@interface YCStompClient(PrivateMethods)
 - (void) sendFrame:(NSString *) command withHeader:(NSDictionary *) header andBody:(NSString *) body;
 - (void) sendFrame:(NSString *) command;
 @end
 
-@implementation CRVStompClient
+@implementation YCStompClient
 
 @synthesize delegate;
 @synthesize _webSocket, host, port, login, passcode, sessionId;
@@ -89,7 +89,7 @@
 
 - (id)initWithHost:(NSString *)theHost
 			  port:(NSUInteger)thePort 
-		  delegate:(id<CRVStompClientDelegate>)theDelegate
+		  delegate:(id<YCStompClientDelegate>)theDelegate
 	   autoconnect:(BOOL) autoconnect
 {
 	if(self = [self initWithHost:theHost port:thePort login:nil passcode:nil delegate:theDelegate autoconnect:NO wss:NO]) {
@@ -102,7 +102,7 @@
 			  port:(NSUInteger)thePort 
 			 login:(NSString *)theLogin 
 		  passcode:(NSString *)thePasscode 
-		  delegate:(id<CRVStompClientDelegate>)theDelegate
+		  delegate:(id<YCStompClientDelegate>)theDelegate
 {
 	return [self initWithHost:theHost port:thePort login:theLogin passcode:thePasscode delegate:theDelegate autoconnect:NO wss:NO];
 }
@@ -111,7 +111,7 @@
 			  port:(NSUInteger)thePort 
 			 login:(NSString *)theLogin 
 		  passcode:(NSString *)thePasscode 
-		  delegate:(id<CRVStompClientDelegate>)theDelegate
+		  delegate:(id<YCStompClientDelegate>)theDelegate
 	   autoconnect:(BOOL) autoconnect
                wss:(BOOL)wssconnection
 {
@@ -229,13 +229,13 @@
 }
 
 - (void)subscribeToDestination:(NSString *)destination {
-	[self subscribeToDestination:destination withAck:CRVStompAckModeAuto];
+	[self subscribeToDestination:destination withAck:YCStompAckModeAuto];
 }
 
-- (void)subscribeToDestination:(NSString *)destination withAck:(CRVStompAckMode) ackMode {
+- (void)subscribeToDestination:(NSString *)destination withAck:(YCStompAckMode) ackMode {
 	NSString *ack;
 	switch (ackMode) {
-		case CRVStompAckModeClient:
+		case YCStompAckModeClient:
 			ack = kAckClient;
 			break;
 		default:

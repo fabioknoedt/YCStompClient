@@ -10,21 +10,21 @@ Usage
 This library was created to work with SocketRocket [https://github.com/square/SocketRocket].
 But shoud work with others WebSocket Libraries.
 
-CRVStompClient.{h,m} to your project.
+YCStompClient.{h,m} to your project.
 
 MyExample.h
 
 	#import <Foundation/Foundation.h>
 	
-	@class CRVStompClient;
-	@protocol CRVStompClientDelegate;
+	@class YCStompClient;
+	@protocol YCStompClientDelegate;
 
 
-	@interface MyExample : NSObject<CRVStompClientDelegate> {
+	@interface MyExample : NSObject<YCStompClientDelegate> {
     	@private
-		CRVStompClient *service;
+		YCStompClient *service;
 	}
-	@property(nonatomic, retain) CRVStompClient *service;
+	@property(nonatomic, retain) YCStompClient *service;
 
 	@end
 
@@ -38,7 +38,7 @@ In MyExample.m
 	[...]
 
 	-(void) aMethod {
-		CRVStompClient *s = [[CRVStompClient alloc] 
+		YCStompClient *s = [[YCStompClient alloc] 
 				initWithHost:@"localhost" 
 						port:61613 
 						login:kUsername
@@ -57,12 +57,12 @@ In MyExample.m
 		[s release];
 	}
 	
-	#pragma mark CRVStompClientDelegate
-	- (void)stompClientDidConnect:(CRVStompClient *)stompService {
+	#pragma mark YCStompClientDelegate
+	- (void)stompClientDidConnect:(YCStompClient *)stompService {
 			NSLog(@"stompServiceDidConnect");
 	}
 
-	- (void)stompClient:(CRVStompClient *)stompService messageReceived:(NSString *)body withHeader:(NSDictionary *)messageHeader {
+	- (void)stompClient:(YCStompClient *)stompService messageReceived:(NSString *)body withHeader:(NSDictionary *)messageHeader {
 		NSLog(@"gotMessage body: %@, header: %@", body, messageHeader);
 		NSLog(@"Message ID: %@", [messageHeader valueForKey:@"message-id"]);
 		// If we have successfully received the message ackknowledge it.

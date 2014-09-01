@@ -1,5 +1,5 @@
 //
-//  CRVStompClient.h
+//  YCStompClient.h
 //  Objc-Stomp
 //
 //
@@ -16,26 +16,26 @@
 #import <Foundation/Foundation.h>
 #import "SRWebSocket.h"
 
-@class CRVStompClient;
+@class YCStompClient;
 
 typedef enum {
-	CRVStompAckModeAuto,
-	CRVStompAckModeClient
-} CRVStompAckMode;
+	YCStompAckModeAuto,
+	YCStompAckModeClient
+} YCStompAckMode;
 
-@protocol CRVStompClientDelegate <NSObject>
-- (void)stompClient:(CRVStompClient *)stompService messageReceived:(NSString *)body withHeader:(NSDictionary *)messageHeader;
+@protocol YCStompClientDelegate <NSObject>
+- (void)stompClient:(YCStompClient *)stompService messageReceived:(NSString *)body withHeader:(NSDictionary *)messageHeader;
 
 @optional
-- (void)stompClientDidDisconnect:(CRVStompClient *)stompService;
-- (void)stompClientWillDisconnect:(CRVStompClient *)stompService withError:(NSError*)error;
-- (void)stompClientDidConnect:(CRVStompClient *)stompService;
-- (void)serverDidSendReceipt:(CRVStompClient *)stompService withReceiptId:(NSString *)receiptId;
-- (void)serverDidSendError:(CRVStompClient *)stompService withErrorMessage:(NSString *)description detailedErrorMessage:(NSString *) theMessage;
+- (void)stompClientDidDisconnect:(YCStompClient *)stompService;
+- (void)stompClientWillDisconnect:(YCStompClient *)stompService withError:(NSError*)error;
+- (void)stompClientDidConnect:(YCStompClient *)stompService;
+- (void)serverDidSendReceipt:(YCStompClient *)stompService withReceiptId:(NSString *)receiptId;
+- (void)serverDidSendError:(YCStompClient *)stompService withErrorMessage:(NSString *)description detailedErrorMessage:(NSString *) theMessage;
 - (void)serverDidSendPing;
 @end
 
-@interface CRVStompClient : NSObject {
+@interface YCStompClient : NSObject {
 	@private
 	SRWebSocket *_webSocket;
 	NSString *host;
@@ -48,19 +48,19 @@ typedef enum {
     BOOL wss;
 }
 
-@property (nonatomic, assign) id<CRVStompClientDelegate> delegate;
+@property (nonatomic, assign) id<YCStompClientDelegate> delegate;
 
 - (id)initWithHost:(NSString *)theHost 
 			  port:(NSUInteger)thePort 
 			 login:(NSString *)theLogin
 		  passcode:(NSString *)thePasscode 
-		  delegate:(id<CRVStompClientDelegate>)theDelegate;
+		  delegate:(id<YCStompClientDelegate>)theDelegate;
 
 - (id)initWithHost:(NSString *)theHost 
 			  port:(NSUInteger)thePort 
 			 login:(NSString *)theLogin
 		  passcode:(NSString *)thePasscode 
-		  delegate:(id<CRVStompClientDelegate>)theDelegate
+		  delegate:(id<YCStompClientDelegate>)theDelegate
 	   autoconnect:(BOOL)autoconnect
                wss:(BOOL)wss;
 
@@ -69,7 +69,7 @@ typedef enum {
  */
 - (id)initWithHost:(NSString *)theHost 
 			  port:(NSUInteger)thePort 
-		  delegate:(id<CRVStompClientDelegate>)theDelegate
+		  delegate:(id<YCStompClientDelegate>)theDelegate
 	   autoconnect:(BOOL) autoconnect;
 
 - (void)connect;
@@ -79,7 +79,7 @@ typedef enum {
 - (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withHeaders:(NSDictionary*)headers;
 - (void)sendMessage:(id)theMessage toDestination:(NSString *)destination withHeaders:(NSDictionary*)headers withReceipt:(NSString *)receipt;
 - (void)subscribeToDestination:(NSString *)destination;
-- (void)subscribeToDestination:(NSString *)destination withAck:(CRVStompAckMode) ackMode;
+- (void)subscribeToDestination:(NSString *)destination withAck:(YCStompAckMode) ackMode;
 - (void)subscribeToDestination:(NSString *)destination withHeader:(NSDictionary *) header;
 - (void)unsubscribeFromDestination:(NSString *)destination;
 - (void)begin:(NSString *)transactionId;
