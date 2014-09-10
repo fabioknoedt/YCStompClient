@@ -84,11 +84,11 @@ Runs fine in iOS5+ and supports ARC.
 Contributors
 ------------
 
+This version:
+* [Fabio Knoedt](https://github.com/fabioknoedt)
+
 Original code:
 * Scott Raymond
 * Stefan Saasen
 * Graham Haworth
 * jbg
-
-This version:
-* Fabio Knoedt
