@@ -1,5 +1,10 @@
 STOMP client for Objective-C
 ============================
+[![Pod Version](http://img.shields.io/cocoapods/v/YCStompClient.svg?style=flat)](http://cocoadocs.org/docsets/YCStompClient/)
+[![Pod Platform](http://img.shields.io/cocoapods/p/YCStompClient.svg?style=flat)](http://cocoadocs.org/docsets/YCStompClient/)
+[![Pod License](http://img.shields.io/cocoapods/l/YCStompClient.svg?style=flat)](https://github.com/yuppiu/YCStompClient/blob/master/LICENSE)
+[![Dependency Status](https://www.versioneye.com/objective-c/YCStompClient/1.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/YCStompClient)
+[![Reference Status](https://www.versioneye.com/objective-c/YCStompClient/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/YCStompClient/references)
 
 This is a simple STOMP client based on [https://github.com/juretta/objc-stomp]
 that supports Stomp v1.1 and v1.2. 
